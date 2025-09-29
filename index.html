@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Binance Alpha Token List</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Binance Alpha Token List</h1>
+    <div class="controls">
+      <input id="searchInput" type="search" placeholder="搜索名称/符号/合约地址..." autocomplete="off">
+      <select id="chainFilter">
+        <option value="">全部链</option>
+      </select>
+      <select id="cexFilter">
+        <option value="">全部</option>
+        <option value="true">已上CEX</option>
+        <option value="false">未上CEX</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="status">
+      <div id="loading" class="loading">正在加载数据...</div>
+      <div id="error" class="error" hidden></div>
+    </section>
+
+    <div class="inline-filters">
+      <label class="checkbox">
+        <input id="onlyNewChk" type="checkbox">
+        <span>只显示 NEW</span>
+      </label>
+      <button id="monitorBtn" type="button">开始监控</button>
+    </div>
+
+    <section class="table-wrap" aria-live="polite">
+      <table id="tokenTable">
+        <thead>
+          <tr>
+            <th>选</th>
+            <th data-key="symbol">符号</th>
+            <th data-key="chainName">链</th>
+            <th data-key="price" class="numeric">价格</th>
+            <th data-key="percentChange24h" class="numeric">24h%</th>
+            <th data-key="volume24h" class="numeric">成交额(24h)</th>
+            <th data-key="marketCap" class="numeric">市值</th>
+            <th data-key="stability" class="numeric">监控</th>
+            <th data-key="dayNotional" class="numeric">当天限价额</th>
+            <th data-key="prevNotional" class="numeric">前一天限价额</th>
+          </tr>
+        </thead>
+        <tbody id="tokenTbody"></tbody>
+      </table>
+    </section>
+
+    <nav class="pagination">
+      <button id="prevBtn" disabled>上一页</button>
+      <span id="pageInfo">第 1 / 1 页</span>
+      <button id="nextBtn" disabled>下一页</button>
+      <label class="page-size">
+        每页
+        <select id="pageSize">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100" selected>100</option>
+        </select>
+        条
+      </label>
+    </nav>
+  </main>
+
+  <footer class="app-footer">
+    数据来源：<a href="https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list" target="_blank" rel="noopener">Binance API</a>
+  </footer>
+
+  <script src="app.js" defer></script>
+  
+</body>
+</html>
+

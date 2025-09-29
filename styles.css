@@ -1,0 +1,119 @@
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --text: #0b0f14;
+  --accent: #0891b2;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --border: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+.app-header h1 { font-size: 18px; margin: 0; letter-spacing: 0.2px; }
+.controls { display: flex; gap: 8px; align-items: center; }
+.controls input, .controls select {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 8px;
+  outline: none;
+}
+.controls button { background: var(--accent); color: white; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+.controls button:hover { opacity: 0.9; }
+.controls input::placeholder { color: var(--muted); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; }
+
+.status { margin: 12px 0; min-height: 24px; }
+.loading { color: var(--muted); }
+.error { color: var(--danger); }
+
+.inline-filters { display: flex; align-items: center; gap: 14px; margin: 8px 0 12px; }
+.checkbox { display: inline-flex; gap: 8px; align-items: center; color: #0b0f14; }
+.checkbox input { width: 16px; height: 16px; }
+.checkbox span { font-weight: 600; font-size: 14px; color: #0b0f14; }
+
+/* 只显示 NEW 模式下，让符号文本更显眼 */
+body.only-new-on .symbol-cell strong { font-weight: 700; font-size: 15px; color: #0b0f14; }
+
+.table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
+}
+thead th.numeric { text-align: right; }
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; white-space: nowrap; }
+tbody td.numeric { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: #f8fafc; }
+
+.token-cell { display: flex; gap: 10px; align-items: center; }
+.token-cell img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; background: #111827; }
+.symbol-cell { position: relative; display: inline-flex; align-items: center; gap: 8px; padding-right: 40px; white-space: nowrap; }
+.symbol-cell img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; background: #111827; }
+.symbol-badge {
+  position: absolute;
+  right: 6px;
+  bottom: 2px;
+  font-size: 8px;
+  background: linear-gradient(135deg, #22d3ee, #34d399);
+  color: #002b36;
+  padding: 0 3px;
+  border-radius: 3px;
+  line-height: 1.1;
+  border: 1px solid rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+.chip { display: inline-block; padding: 2px 8px; border: 1px solid var(--border); border-radius: 999px; color: #0b0f14; background: #f1f5f9; font-size: 12px; }
+
+.pct-pos { color: var(--success); }
+.pct-neg { color: var(--danger); }
+.stability-ok { color: #16a34a; font-weight: 600; }
+.stability-stable { color: #059669; font-weight: 600; }
+.stability-volatile { color: #dc2626; font-weight: 600; }
+.stability-mid { color: #d97706; font-weight: 600; }
+.stability-paused { color: #6b7280; }
+
+.pagination { display: flex; gap: 10px; align-items: center; justify-content: flex-end; margin-top: 14px; }
+.pagination button {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+.page-size select { background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; }
+
+.app-footer { border-top: 1px solid var(--border); color: var(--muted); padding: 12px 20px 24px; text-align: center; }
+.app-footer a { color: var(--accent); text-decoration: none; }
+.app-footer a:hover { text-decoration: underline; }
+
