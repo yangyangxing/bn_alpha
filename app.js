@@ -365,47 +365,47 @@
     if (prev) { prev.cell = cell; prev.token = token; return; }
     stabilityWatchers.set(sym, { running: true, cell, token, history: [] });
     while (stabilityWatchers.get(sym)?.running) {
-      // 每3秒请求一次，取3秒窗口内价格最大、最小
-      const windowData = await getWindowMinMax(sym, 3_000);
-      await delay(3_000);
+      // 每2秒请求一次，取2秒窗口内价格最大、最小
+      const windowData = await getWindowMinMax(sym, 2_000);
+      await delay(2_000);
       const watcher = stabilityWatchers.get(sym);
       if (!watcher) break;
       const c = watcher.cell; const t = watcher.token;
       if (!windowData) { c.textContent = '-'; c.className = 'numeric stability-paused'; continue; }
-      // 维护 3 段 3s 窗口的历史
+      // 维护若干段 2s 窗口的历史
       watcher.history.push(windowData);
       if (watcher.history.length > 3) watcher.history.shift();
 
-      // 3s 判断
+      // 2s 判断（最近一段）
       const cur = windowData;
-      const th3 = cur.minP / 100000;
-      const diff3 = cur.maxP - cur.minP;
-      if (diff3 > th3) {
+      const th2 = cur.minP / 100000;
+      const diff2 = cur.maxP - cur.minP;
+      if (diff2 > th2) {
         c.textContent = '波动';
         c.className = 'numeric stability-volatile';
         t.stability = 0;
         continue;
       }
-      // 6s 判断（最近两段）
+      // 4s 判断（最近两段）
       let level = '微稳';
       let cls = 'numeric stability-mid';
       if (watcher.history.length >= 2) {
         const last2 = watcher.history.slice(-2);
         const min6 = Math.min(last2[0].minP, last2[1].minP);
         const max6 = Math.max(last2[0].maxP, last2[1].maxP);
-        const th6 = min6 / 100000;
-        if (max6 - min6 <= th6) {
+        const th4 = min6 / 100000;
+        if (max6 - min6 <= th4) {
           level = '稳';
           cls = 'numeric stability-stable';
         }
       }
-      // 9s 判断（最近三段）
+      // 6s 判断（最近三段）
       if (watcher.history.length >= 3) {
         const last3 = watcher.history.slice(-3);
         const min9 = Math.min(last3[0].minP, last3[1].minP, last3[2].minP);
         const max9 = Math.max(last3[0].maxP, last3[1].maxP, last3[2].maxP);
-        const th9 = min9 / 100000;
-        if (max9 - min9 <= th9) {
+        const th6 = min9 / 100000;
+        if (max9 - min9 <= th6) {
           level = '极稳';
           cls = 'numeric stability-ok';
         }
@@ -420,9 +420,9 @@
 
   async function getLatestPrice(symbol) {
     try {
-      // 使用 3 秒窗口内的 agg trades 价格区间来判定波动
+      // 使用 2 秒窗口内的 agg trades 价格区间来判定波动
       const end = Date.now();
-      const start = end - 3 * 1000;
+      const start = end - 2 * 1000;
       const url = new URL(AGG_TRADES_URL);
       url.searchParams.set('symbol', symbol);
       url.searchParams.set('startTime', String(start));
